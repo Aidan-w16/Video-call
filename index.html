@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Beam — Video Calls</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header>
+  <div class="logo">beam<span>.</span></div>
+  <div class="status-pill" id="conn-pill">● idle</div>
+</header>
+
+<!-- Lobby -->
+<div id="lobby">
+  <div class="hero-text">
+    <h1>crystal-clear<br><em>video calls.</em></h1>
+    <p>peer-to-peer · no accounts · just share a name</p>
+  </div>
+
+  <div class="card">
+    <div class="card-label">your username (auto-assigned)</div>
+    <div class="username-display" id="my-name">generating...</div>
+    <div id="log">initialising...</div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">call someone</div>
+    <div class="input-row">
+      <input type="text" id="call-target" placeholder="their username…" autocomplete="off" />
+      <button class="btn-primary" onclick="startCall()">Call ↗</button>
+    </div>
+  </div>
+</div>
+
+<!-- Incoming call overlay -->
+<div id="incoming-overlay">
+  <div class="incoming-card">
+    <div class="ring-anim">📞</div>
+    <div>
+      <h2>Incoming call</h2>
+      <p id="caller-name-label">someone is calling…</p>
+    </div>
+    <div class="answer-btns">
+      <button class="btn-danger" style="border-radius:10px;padding:12px 24px;" onclick="rejectCall()">Decline</button>
+      <button class="btn-primary" style="border-radius:10px;padding:12px 24px;" onclick="answerCall()">Answer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Active call view -->
+<div id="call-view">
+  <div class="video-stage">
+    <div class="no-remote" id="waiting-msg">
+      <div class="spinner"></div>
+      <span>waiting for peer…</span>
+    </div>
+    <video id="remote-video" autoplay playsinline style="display:none"></video>
+    <video id="local-video"  autoplay playsinline muted></video>
+    <div class="call-info-bar">
+      <span class="call-dot"></span>
+      <span id="call-label">connecting…</span>
+    </div>
+  </div>
+  <div class="call-controls">
+    <div class="ctrl-wrap">
+      <button class="ctrl-btn unmuted" id="mic-btn" onclick="toggleMic()">🎤</button>
+      <span class="ctrl-label">mic</span>
+    </div>
+    <div class="ctrl-wrap">
+      <button class="ctrl-btn end-call" onclick="endCall()">📵</button>
+      <span class="ctrl-label">end</span>
+    </div>
+    <div class="ctrl-wrap">
+      <button class="ctrl-btn unmuted" id="cam-btn" onclick="toggleCam()">📹</button>
+      <span class="ctrl-label">camera</span>
+    </div>
+  </div>
+</div>
+
+<!-- Load order matters: Supabase → backend → frontend -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="backend.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
